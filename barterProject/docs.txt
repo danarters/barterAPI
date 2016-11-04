@@ -1,0 +1,60 @@
+DATA MODELS
+user:
+	userId
+	username
+	password
+
+item:
+	itemId
+	owner
+	title
+	description
+	image
+	pendingRequests
+
+trade:
+	tradeId
+	message
+	requestedItem
+	offeredItem
+	pending
+	accepted
+
+
+USER
+	url: /user
+	method: POST
+	description: creates user
+		
+	url: /user/USERID
+	method: GET
+	description: return user json
+
+ITEM
+	url: /item
+	method: POST
+	description: creates item if requesting user does not currently have an item
+
+	url: /item/ITEMID
+	method: GET
+	description: returns item json
+
+TRADE
+	url: /trade/request/ITEMID
+	method: POST
+	description: requests a trade on ITEMID with the user's item (fails if the user doesnt have one)
+	responses: 
+		{'status': 'completed'} - item is traded instantly
+		{'status': 'pending'} - item is pending user confirmation
+
+	url: /trade/accept/TRADEID
+	method: PUT
+	description: accepts a pending trade on a user's item. Swaps items and archives current trades pending on both user's items
+
+	url: /trade/reject/TRADEID
+	method: PUT
+	description: rejects a pending trade 
+
+
+
+
